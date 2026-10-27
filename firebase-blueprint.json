@@ -1,0 +1,247 @@
+{
+  "entities": {
+    "Business": {
+      "title": "Business",
+      "description": "Multi-tenant business workspace entity",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string", "maxLength": 100 },
+        "business_type": { "type": "string", "maxLength": 100 },
+        "owner_name": { "type": "string", "maxLength": 100 },
+        "owner_email": { "type": "string", "maxLength": 100 },
+        "owner_phone": { "type": "string", "maxLength": 50 },
+        "address": { "type": "string", "maxLength": 200 },
+        "city": { "type": "string", "maxLength": 100 },
+        "country": { "type": "string", "maxLength": 100 },
+        "currency": { "type": "string", "maxLength": 10 },
+        "timezone": { "type": "string", "maxLength": 50 },
+        "status": { "type": "string", "enum": ["active", "suspended", "inactive"] },
+        "created_at": { "type": "string" },
+        "updated_at": { "type": "string" }
+      },
+      "required": ["name", "owner_name", "owner_email", "currency", "status"]
+    },
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile linked to Firebase Auth UID",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "tenantId": { "type": "string" },
+        "business_id": { "type": "string" },
+        "full_name": { "type": "string", "maxLength": 100 },
+        "email": { "type": "string", "maxLength": 100 },
+        "phone": { "type": "string", "maxLength": 50 },
+        "system_role": { "type": "string" },
+        "role": { "type": "string" },
+        "is_active": { "type": "boolean" },
+        "created_at": { "type": "string" },
+        "updated_at": { "type": "string" }
+      },
+      "required": ["full_name", "email", "system_role", "is_active"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Product item in inventory",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "tenantId": { "type": "string" },
+        "business_id": { "type": "string" },
+        "name": { "type": "string", "maxLength": 200 },
+        "sku": { "type": "string", "maxLength": 100 },
+        "barcode": { "type": "string", "maxLength": 100 },
+        "unit": { "type": "string", "maxLength": 50 },
+        "purchase_price": { "type": "number" },
+        "selling_price": { "type": "number" },
+        "wholesale_price": { "type": "number" },
+        "min_stock": { "type": "number" },
+        "current_stock": { "type": "number" },
+        "category_id": { "type": "string" },
+        "brand_id": { "type": "string" },
+        "supplier_id": { "type": "string" },
+        "description": { "type": "string", "maxLength": 1000 },
+        "image_url": { "type": "string", "maxLength": 500 },
+        "expiry_date": { "type": "string" },
+        "batch_number": { "type": "string", "maxLength": 100 },
+        "location": { "type": "string", "maxLength": 100 },
+        "is_active": { "type": "boolean" },
+        "is_deleted": { "type": "boolean" },
+        "created_at": { "type": "string" },
+        "updated_at": { "type": "string" }
+      },
+      "required": ["business_id", "name", "barcode", "selling_price", "current_stock"]
+    },
+    "Sale": {
+      "title": "Sale",
+      "description": "POS or Sales invoice transaction",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "tenantId": { "type": "string" },
+        "business_id": { "type": "string" },
+        "invoice_number": { "type": "string", "maxLength": 100 },
+        "customer_id": { "type": "string" },
+        "customer_name": { "type": "string", "maxLength": 100 },
+        "subtotal": { "type": "number" },
+        "tax": { "type": "number" },
+        "discount": { "type": "number" },
+        "total": { "type": "number" },
+        "paid_amount": { "type": "number" },
+        "debt_amount": { "type": "number" },
+        "payment_method": { "type": "string" },
+        "status": { "type": "string" },
+        "created_at": { "type": "string" }
+      },
+      "required": ["business_id", "invoice_number", "total", "paid_amount", "payment_method", "status"]
+    },
+    "Customer": {
+      "title": "Customer",
+      "description": "Customer entity with credit and debt ledger",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "tenantId": { "type": "string" },
+        "business_id": { "type": "string" },
+        "name": { "type": "string", "maxLength": 100 },
+        "phone": { "type": "string", "maxLength": 50 },
+        "email": { "type": "string", "maxLength": 100 },
+        "credit_limit": { "type": "number" },
+        "current_debt": { "type": "number" },
+        "created_at": { "type": "string" }
+      },
+      "required": ["business_id", "name", "phone", "current_debt"]
+    },
+    "Supplier": {
+      "title": "Supplier",
+      "description": "Supplier vendor entity",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "tenantId": { "type": "string" },
+        "business_id": { "type": "string" },
+        "name": { "type": "string", "maxLength": 100 },
+        "phone": { "type": "string", "maxLength": 50 },
+        "email": { "type": "string", "maxLength": 100 },
+        "current_debt": { "type": "number" },
+        "created_at": { "type": "string" }
+      },
+      "required": ["business_id", "name", "phone", "current_debt"]
+    },
+    "Expense": {
+      "title": "Expense",
+      "description": "Operational business expense record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "tenantId": { "type": "string" },
+        "business_id": { "type": "string" },
+        "expense_name": { "type": "string", "maxLength": 150 },
+        "category": { "type": "string", "maxLength": 100 },
+        "amount": { "type": "number" },
+        "payment_method": { "type": "string" },
+        "description": { "type": "string", "maxLength": 500 },
+        "created_at": { "type": "string" }
+      },
+      "required": ["business_id", "expense_name", "category", "amount", "payment_method"]
+    },
+    "Employee": {
+      "title": "Employee",
+      "description": "Staff member profile and payroll record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "tenantId": { "type": "string" },
+        "business_id": { "type": "string" },
+        "employee_id": { "type": "string", "maxLength": 50 },
+        "full_name": { "type": "string", "maxLength": 100 },
+        "phone": { "type": "string", "maxLength": 50 },
+        "email": { "type": "string", "maxLength": 100 },
+        "position": { "type": "string", "maxLength": 100 },
+        "department": { "type": "string", "maxLength": 100 },
+        "salary": { "type": "number" },
+        "status": { "type": "string" },
+        "created_at": { "type": "string" }
+      },
+      "required": ["business_id", "full_name", "position", "salary", "status"]
+    },
+    "Branch": {
+      "title": "Branch",
+      "description": "Business retail or warehouse branch",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "tenantId": { "type": "string" },
+        "business_id": { "type": "string" },
+        "name": { "type": "string", "maxLength": 100 },
+        "address": { "type": "string", "maxLength": 200 },
+        "phone": { "type": "string", "maxLength": 50 },
+        "is_active": { "type": "boolean" },
+        "created_at": { "type": "string" }
+      },
+      "required": ["business_id", "name", "is_active"]
+    },
+    "AuditLog": {
+      "title": "AuditLog",
+      "description": "System event audit log record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "tenantId": { "type": "string" },
+        "business_id": { "type": "string" },
+        "user_id": { "type": "string" },
+        "user_name": { "type": "string", "maxLength": 100 },
+        "action": { "type": "string", "maxLength": 100 },
+        "module": { "type": "string", "maxLength": 100 },
+        "record_id": { "type": "string", "maxLength": 128 },
+        "description": { "type": "string", "maxLength": 500 },
+        "ip_address": { "type": "string", "maxLength": 100 },
+        "created_at": { "type": "string" }
+      },
+      "required": ["action", "module", "description", "created_at"]
+    }
+  },
+  "firestore": {
+    "/businesses/{businessId}": {
+      "schema": { "$ref": "#/entities/Business" },
+      "description": "Tenant businesses"
+    },
+    "/user_profiles/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "User profiles"
+    },
+    "/products/{productId}": {
+      "schema": { "$ref": "#/entities/Product" },
+      "description": "Inventory products"
+    },
+    "/sales/{saleId}": {
+      "schema": { "$ref": "#/entities/Sale" },
+      "description": "POS and Sales invoices"
+    },
+    "/customers/{customerId}": {
+      "schema": { "$ref": "#/entities/Customer" },
+      "description": "Customer debts and profiles"
+    },
+    "/suppliers/{supplierId}": {
+      "schema": { "$ref": "#/entities/Supplier" },
+      "description": "Suppliers and payables"
+    },
+    "/expenses/{expenseId}": {
+      "schema": { "$ref": "#/entities/Expense" },
+      "description": "Business expenses"
+    },
+    "/employees/{employeeId}": {
+      "schema": { "$ref": "#/entities/Employee" },
+      "description": "Employee records"
+    },
+    "/branches/{branchId}": {
+      "schema": { "$ref": "#/entities/Branch" },
+      "description": "Branch locations"
+    },
+    "/audit_logs/{logId}": {
+      "schema": { "$ref": "#/entities/AuditLog" },
+      "description": "Audit security records"
+    }
+  }
+}

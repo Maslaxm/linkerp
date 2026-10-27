@@ -1,0 +1,13 @@
+{
+  "projectId": "link-erp-88b2b",
+  "appId": "1:468952559264:web:1a7042cb6db81ed252a3c5",
+  "apiKey": "AIzaSyCL8q-YItIO31-iZxOAJTF46JTFH9L2Tok",
+  "authDomain": "link-erp-88b2b.firebaseapp.com",
+  "databaseURL": "https://link-erp-88b2b-default-rtdb.firebaseio.com",
+  "firestoreDatabaseId": "(default)",
+  "storageBucket": "link-erp-88b2b.firebasestorage.app",
+  "messagingSenderId": "468952559264",
+  "measurementId": "G-4P8MQSY9QS",
+  "oAuthClientId": "",
+  "recaptchaSiteKey": ""
+}

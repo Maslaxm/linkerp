@@ -1,0 +1,6 @@
+{
+  "name": "LINK ERP",
+  "description": "Modern multi-tenant SaaS ERP web application with Firebase Firestore, Google Authentication, POS, inventory, barcode scanning, accounting, and multi-branch management.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

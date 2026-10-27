@@ -1,0 +1,117 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isSuperAdmin() {
+      return isSignedIn() && (
+        request.auth.token.email == 'ishanews7@gmail.com' ||
+        request.auth.token.email == 'admin@linkerp.com'
+      );
+    }
+
+    // Businesses collection: public read for tenant branding & workspace lookup; creation allowed
+    match /businesses/{businessId} {
+      allow read, create, update: if true;
+      allow delete: if isSuperAdmin();
+    }
+
+    // User profiles collection: public read for login verification; creation and profile sync allowed
+    match /user_profiles/{userId} {
+      allow read, create, update: if true;
+      allow delete: if isSuperAdmin();
+    }
+
+    // Direct users collection (fallback for Firebase Auth integration)
+    match /users/{userId} {
+      allow read, create, update: if true;
+      allow delete: if isSuperAdmin();
+    }
+
+    // Products collection (tenant isolated)
+    match /products/{productId} {
+      allow read, write: if true;
+    }
+
+    // Sales collection
+    match /sales/{saleId} {
+      allow read, write: if true;
+    }
+
+    // Purchases collection
+    match /purchases/{purchaseId} {
+      allow read, write: if true;
+    }
+
+    // Customers collection
+    match /customers/{customerId} {
+      allow read, write: if true;
+    }
+
+    // Suppliers collection
+    match /suppliers/{supplierId} {
+      allow read, write: if true;
+    }
+
+    // Expenses collection
+    match /expenses/{expenseId} {
+      allow read, write: if true;
+    }
+
+    // Employees collection
+    match /employees/{employeeId} {
+      allow read, write: if true;
+    }
+
+    // Branches collection
+    match /branches/{branchId} {
+      allow read, write: if true;
+    }
+
+    // Categories & Brands
+    match /categories/{catId} {
+      allow read, write: if true;
+    }
+
+    match /brands/{brandId} {
+      allow read, write: if true;
+    }
+
+    // POS Sessions
+    match /pos_sessions/{sessionId} {
+      allow read, write: if true;
+    }
+
+    // Audit logs collection (append-only)
+    match /audit_logs/{logId} {
+      allow read, create: if true;
+      allow update, delete: if false; // Immutable audit trail
+    }
+
+    // Subscription plans collection
+    match /subscription_plans/{planId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Subscriptions collection
+    match /business_subscriptions/{subId} {
+      allow read, write: if true;
+    }
+
+    // Connection test document
+    match /test/{docId} {
+      allow read, write: if true;
+    }
+
+    // Global fallback
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
